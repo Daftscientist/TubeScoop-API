@@ -18,8 +18,8 @@ const Routes = [
     restricted: false
   },
   {
-    title: 'OurTube',
-    path: '/ourtube/search/:query',
+    title: 'YouTube',
+    path: '/youtube',
     exact: false,
     element: OurTube,
     restricted: false
