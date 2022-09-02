@@ -17,7 +17,8 @@ exports.index =  function (request, response){
           channel: {
             name: video.videoRenderer.ownerText.runs[0].text,
             id: video.videoRenderer.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId,
-            url: video.videoRenderer.ownerText.runs[0].navigationEndpoint.browseEndpoint.canonicalBaseUrl
+            url: video.videoRenderer.ownerText.runs[0].navigationEndpoint.browseEndpoint.canonicalBaseUrl,
+            picture: video.videoRenderer.channelThumbnailSupportedRenderers.channelThumbnailWithLinkRenderer.thumbnail.thumbnails[0].url
           },
           url: video.videoRenderer.navigationEndpoint.commandMetadata.webCommandMetadata.url,
         });
