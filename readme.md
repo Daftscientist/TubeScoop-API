@@ -12,7 +12,7 @@ This project is a Node.js application that uses the Express.js framework to crea
 
 ## Error Handling
 
-The application includes error handling middleware that logs the error stack trace and sends a 500 response with the message "Something broke!" when an error occurs.
+The application includes error handling middleware.
 
 ## Running the Server
 
