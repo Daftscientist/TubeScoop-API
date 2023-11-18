@@ -28,6 +28,7 @@ exports.playlistData = data => {
             views: video.videoInfo.runs[0].text,
             released_relatively: video.videoInfo.runs[2].text,
             channel: video.shortBylineText.runs[0].text,
+            id: video.videoId,
             channel_url: `https://www.youtube.com${video.shortBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
         }
     })
@@ -50,6 +51,7 @@ exports.searchData = data => {
                 url: reform_url(video.videoId),
                 channel: video.ownerText.runs[0].text,
                 views: VIEWS,
+                id: video.videoId,
                 MORE_INFO: "POST https://silver-yodel-p9pqr6qq94jh6xr4-3000.app.github.dev/get_video"
             };
         });
