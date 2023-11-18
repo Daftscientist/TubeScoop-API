@@ -13,6 +13,27 @@ exports.ytInitialData = function (html) {
     }
 }
 
+exports.playlistData = data => {
+    const base = data.contents.twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].itemSectionRenderer.contents[0].playlistVideoListRenderer.contents;
+
+    return base
+    .filter(item => item.playlistVideoRenderer)
+    .map(({ playlistVideoRenderer: video }) => {
+        return {
+            title: video.title.runs[0].text,
+            thumbnail: video.thumbnail.thumbnails[0].url,
+            url: reform_url(video.videoId),
+            channel: video.shortBylineText.runs[0].text,
+            length: video.lengthText.simpleText,
+            views: video.videoInfo.runs[0].text,
+            released_relatively: video.videoInfo.runs[2].text,
+            channel: video.shortBylineText.runs[0].text,
+            channel_url: `https://www.youtube.com${video.shortBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
+        }
+    })
+
+}
+
 exports.searchData = data => {
     const base = data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;
     return base
