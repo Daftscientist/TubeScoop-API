@@ -1,11 +1,18 @@
-// make a basic express app with a post route
-
 const express = require('express');
 const app = express();
 
 app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.post('/get_video', require('./routes/get_video.js').index);
+
+app.use('/search', require('./routes/search'));
+app.use('/get_video', require('./routes/get_video'));
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');

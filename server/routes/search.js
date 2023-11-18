@@ -1,17 +1,21 @@
-const { default: axios } = require('axios');
+const express = require('express');
+const router = express.Router();
+const axios = require('axios');
+const { ytInitialData, searchData } = require('../helpers/parsing');
 
-function reform_url(id){
-    // reforms the url using the id. (uniformly formats the url)
-    return `https://www.youtube.com/watch?v=${id}`;
-}
-
-exports.index =  function (request, response){
-
-    // if no search term was provided, return an error
-    if (!request.body.search) {
-        return response.status(400).send('No search term provided');
+router.post('/', async (req, res, next) => {
+    if (!req.body.search) {
+        return res.status(400).send('No search term provided');
     }
 
-    
-    
-}
+    try {
+        const response = await axios.get(`https://www.youtube.com/results?search_query=${req.body.search}`);
+        res.json({
+            videos: searchData(ytInitialData(response.data))
+        });
+    } catch (err) {
+        next(err);
+    }
+});
+
+module.exports = router;
