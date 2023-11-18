@@ -7,6 +7,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 
 app.use('/search', require('./routes/search'));
 app.use('/get_video', require('./routes/get_video'));
+app.use('/get_playlist', require('./routes/get_playlist'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
