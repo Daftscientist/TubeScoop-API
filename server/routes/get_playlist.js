@@ -3,7 +3,7 @@ const express = require('express');
 const axios = require('axios');
 
 // --- Internal Imports ---
-const { ytInitialData, playlistData } = require('../libs/parsing');
+const { ytInitialData, playlistVideos, playlistData } = require('../libs/parsing');
 
 // --- Persistant Instances ---
 const router = express.Router();
@@ -20,7 +20,11 @@ router.post('/', async (req, res, next) => {
 
     try {
         const response = await axios.get(req.body.url);
-        return res.json(playlistData(ytInitialData(response.data)));
+        let data = ytInitialData(response.data)
+        return res.json(playlistData(
+            data=data,
+            videos=playlistVideos(data)
+        ));
     } catch (err) {
         next(err);
     }

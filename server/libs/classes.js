@@ -1,5 +1,18 @@
 // Classes made to standardize the data that is sent to the client
 
+exports.Playlist = class {
+    constructor(title, thumbnail, url, creator, description, video_count, id, videos) {
+        this.title = title;
+        this.thumbnail = thumbnail;
+        this.url = url;
+        this.creator = creator; // ReducedChannel{}
+        this.description = description;
+        this.video_count = video_count;
+        this.id = id;
+        this.videos = videos; // ReducedVideo[]
+    }
+}
+
 exports.ReducedChannel = class {
     constructor(name, url) {
         this.name = name;

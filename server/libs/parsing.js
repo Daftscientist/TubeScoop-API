@@ -1,5 +1,5 @@
 // --- Internal Imports ---
-const { ReducedChannel, ReducedVideo, FullChannel, FullVideo, DepthChannel } = require('./classes');
+const { ReducedChannel, ReducedVideo, FullChannel, FullVideo, DepthChannel, Playlist } = require('./classes');
 
 // --- Local Functions --- 
 const reform_url = id => `https://www.youtube.com/watch?v=${id}`;
@@ -78,22 +78,32 @@ exports.channelData = data => {
     );
 }
 
-exports.playlistData = data => {
-    const base = data.contents.twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].itemSectionRenderer.contents[0].playlistVideoListRenderer.contents;
+exports.playlistData = (data, videos) => {
+    const header = data.header.playlistHeaderRenderer;
 
+
+    return new Playlist(
+        title=header.title.simpleText,
+        thumbnail=header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnail.thumbnails[0].url,
+        url=`https://www.youtube.com/playlist?list=${header.playlistId}`,
+        creator=new ReducedChannel(
+            name=header.ownerText.runs[0].text,
+            url=`https://www.youtube.com${header.ownerText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url}`
+        ),
+        description=header.descriptionText.simpleText,
+        video_count=header.numVideosText.runs[0].text,
+        id=header.playlistId,
+        videos=videos
+    );
+}
+
+exports.playlistVideos = data => {
+    const base = data.contents.twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].itemSectionRenderer.contents[0].playlistVideoListRenderer.contents;
     return base
     .filter(item => item.playlistVideoRenderer)
     .map(({ playlistVideoRenderer: video }) => {
 
         const channel = new ReducedChannel(video.shortBylineText.runs[0].text, `https://www.youtube.com${video.shortBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url}`);
-
-        video.title.runs[0].text,
-        video.thumbnail.thumbnails[0].url,
-        reform_url(video.videoId),
-        channel,
-        video.lengthText.simpleText,
-        video.videoInfo.runs[2].text,
-        video.videoId
 
         return new ReducedVideo(
             title=video.title.runs[0].text,
