@@ -1,8 +1,14 @@
+// --- External Imports ---
 const express = require('express');
-const router = express.Router();
 const axios = require('axios');
+
+// --- Internal Imports ---
 const { ytInitialData, searchData } = require('../libs/parsing');
 
+// --- Persistant Instances ---
+const router = express.Router();
+
+// --- Routes ---
 router.post('/', async (req, res, next) => {
     if (!req.body.query) {
         return res.status(400).send('No search term provided');
@@ -18,4 +24,5 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+// --- Routes ---
 module.exports = router;
