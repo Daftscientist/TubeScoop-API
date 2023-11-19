@@ -44,12 +44,20 @@ exports.FullVideo = class {
 }
 
 exports.DepthChannel = class {
-    constructor(name, subscribers, verified, url, profile_picture, videos) {
+    constructor(name, description, keywords, subcribers, verified, url, profile_picture, banner, tv_banner, sfw, availableIn, rss_feed, video_count, id) {
         this.name = name;
-        this.subscribers = subscribers;
+        this.description = description;
+        this.keywords = keywords;
+        this.subcribers = subcribers;
         this.verified = verified;
         this.url = url;
         this.profile_picture = profile_picture;
-        this.videos = videos; // ReducedVideo[]
+        this.banner = banner;
+        this.tv_banner = tv_banner;
+        this.sfw = sfw;
+        this.availableIn = availableIn;
+        this.rss_feed = rss_feed;
+        this.video_count = video_count;
+        this.id = id;
     }
 }

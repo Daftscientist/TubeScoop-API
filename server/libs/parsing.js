@@ -1,5 +1,5 @@
 // --- Internal Imports ---
-const { ReducedChannel, ReducedVideo, FullChannel, FullVideo } = require('./classes');
+const { ReducedChannel, ReducedVideo, FullChannel, FullVideo, DepthChannel } = require('./classes');
 
 // --- Local Functions --- 
 const reform_url = id => `https://www.youtube.com/watch?v=${id}`;
@@ -18,8 +18,24 @@ exports.ytInitialData =  html => {
 }
 
 exports.channelData = data => {
-    const base = data.contents
-    return base
+    const metadata = data.metadata.channelMetadataRenderer;
+    const header = data.header.c4TabbedHeaderRenderer;
+    return new DepthChannel(
+        name=metadata.title,
+        description=metadata.description,
+        keywords=metadata.keywords,
+        subscribers=header.subscriberCountText.simpleText,
+        verified=header.badges.metadataBadgeRenderer,//.tooltip === 'Verified' && header.badges.metadataBadgeRenderer.style === 'BADGE_STYLE_TYPE_VERIFIED',
+        url=metadata.channelUrl,
+        profile_picture=metadata.avatar.thumbnails[0].url,
+        banner=header.banner.thumbnails[0].url,
+        tv_banner=header.tvBanner.thumbnails[0].url,
+        sfw=metadata.isFamilySafe,
+        availableIn=metadata.availableCountryCodes,
+        rss_feed=metadata.rssUrl,
+        video_count=header.videosCountText.runs[0].text,
+        id=metadata.externalId
+    );
 }
 
 exports.playlistData = data => {
