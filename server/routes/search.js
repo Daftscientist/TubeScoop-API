@@ -16,9 +16,9 @@ router.post('/', async (req, res, next) => {
 
     try {
         const response = await axios.get(`https://www.youtube.com/results?search_query=${req.body.query}`);
-        res.json({
-            videos: searchData(ytInitialData(response.data))
-        });
+        res.json(
+            searchData(ytInitialData(response.data))
+        );
     } catch (err) {
         next(err);
     }
