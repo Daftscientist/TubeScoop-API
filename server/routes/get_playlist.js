@@ -1,24 +1,30 @@
+// --- External Imports ---
 const express = require('express');
-const router = express.Router();
 const axios = require('axios');
+
+// --- Internal Imports ---
 const { ytInitialData, playlistData } = require('../libs/parsing');
 
+// --- Persistant Instances ---
+const router = express.Router();
+
+// --- Route ---
 router.post('/', async (req, res, next) => {
     if (!req.body.url) {
-        return res.status(400).send('No search term provided');
+        return res.status(400).send('No url provided');
     }
 
-    var playlistmatch = req.body.url.match(/^.*(youtu.be\/|list=)([^#\&\?]*).*/);
-    if (!playlistmatch){
+    if (!req.body.url.match(/^.*(youtu.be\/|list=)([^#\&\?]*).*/)){
         return res.status(400).send('Invalid youtube playlist url');
     }
 
     try {
         const response = await axios.get(req.body.url);
-        res.json(playlistData(ytInitialData(response.data)));
+        return res.json(playlistData(ytInitialData(response.data)));
     } catch (err) {
         next(err);
     }
 });
 
+// --- Exports ---
 module.exports = router;
