@@ -12,7 +12,7 @@ exports.ytInitialData =  html => {
         try {
             return JSON.parse(match[1]);
         } catch (err) {
-            console.log(err);
+            console.log(err); // Should not error
         }
     }
 }
