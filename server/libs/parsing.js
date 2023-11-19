@@ -20,12 +20,28 @@ exports.ytInitialData =  html => {
 exports.channelData = data => {
     const metadata = data.metadata.channelMetadataRenderer;
     const header = data.header.c4TabbedHeaderRenderer;
+
+    const isVerified = data1 => {
+        if (data1.badges && data1.badges[0].metadataBadgeRenderer.tooltip === 'Verified' && data1.badges[0].metadataBadgeRenderer.style === 'BADGE_STYLE_TYPE_VERIFIED') {
+            return true;
+        }
+        return false;
+    };
+
+    const isArtist = data1 => {
+        if (data1.badges && data1.badges[0].metadataBadgeRenderer.tooltip === 'Official Artist Channel' && data1.badges[0].metadataBadgeRenderer.style === 'BADGE_STYLE_TYPE_VERIFIED_ARTIST') {
+            return true;
+        }
+        return false;
+    };
+
     return new DepthChannel(
         name=metadata.title,
         description=metadata.description,
         keywords=metadata.keywords,
         subscribers=header.subscriberCountText.simpleText,
-        verified=header.badges.metadataBadgeRenderer,//.tooltip === 'Verified' && header.badges.metadataBadgeRenderer.style === 'BADGE_STYLE_TYPE_VERIFIED',
+        verified=isVerified(header),
+        artist=isArtist(header),
         url=metadata.channelUrl,
         profile_picture=metadata.avatar.thumbnails[0].url,
         banner=header.banner.thumbnails[0].url,
