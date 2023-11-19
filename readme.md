@@ -15,6 +15,38 @@ This project is a Node.js application that uses the Express.js framework to crea
 | Get Channel Details | `/get_channel` | `url` (`/@[...]` or `/channel/[...]`) | `POST` | [DepthChannel](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L46C1-L64C2) |
 | Get A Channel's Videos | `/get_channel_videos` | `url` (`/@[...]` or `/channel/[...]`) | `POST` | [[ReducedVideo]](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L10-L21) |
 
+## Examples
+Fetching information on a YouTube video:
+```bash
+curl -X POST http(s)://[your_domain]:[your_port]/get_video
+   -H "Content-Type: application/json"
+   -d '{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}'  
+```
+Fetching information on a YouTube channel:
+```bash
+curl -X POST http(s)://[your_domain]:[your_port]/get_channel
+   -H "Content-Type: application/json"
+   -d '{"url": "https://www.youtube.com/channel/UCuAXFkgsw1L7xaCfnd5JJOw"}'  
+```
+Fetching a list of a channel's videos:
+```bash
+curl -X POST http(s)://[your_domain]:[your_port]/get_channel_videos
+   -H "Content-Type: application/json"
+   -d '{"url": "https://www.youtube.com/channel/UCuAXFkgsw1L7xaCfnd5JJOw"}'  
+```
+Fetching playlist information:
+```bash
+curl -X POST http(s)://[your_domain]:[your_port]/get_playlist
+   -H "Content-Type: application/json"
+   -d '{"url": "https://www.youtube.com/playlist?list=PLlaN88a7y2_qSLH3pLiQIQ6isY_DZTtdg"}'  
+```
+Searching YouTube:
+```bash
+curl -X POST http(s)://[your_domain]:[your_port]/search
+   -H "Content-Type: application/json"
+   -d '{"query": "What is the rickroll trend?"}'  
+```
+
 ## Error Handling
 
 The application includes error-handling middleware.
