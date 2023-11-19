@@ -8,7 +8,7 @@ const { ytInitialData, videoData } = require('../libs/parsing');
 // --- Persistant Instances ---
 const router = express.Router();
 
-// --- Globals ---
+// --- Locals ---
 const YOUTUBE_VIDEO = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
 const reform_url = id => `https://www.youtube.com/watch?v=${id}`;
 
