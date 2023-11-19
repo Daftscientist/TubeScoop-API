@@ -9,11 +9,11 @@ This project is a Node.js application that uses the Express.js framework to crea
 
 | Name  | Path | Body Content | Protocal | Response |
 | ------------- | ------------- | ------------- |------------- |------------- |
-| Search | `/search` | `query` | `POST` | [ReducedVideo[]](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L10-L21) | 
-| Get Playlist Details | `/get_playlist` | `url` | `POST` | [Playlist](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L10-L21) |
-| Get Video Details | `/get_video` | `url` | `POST` | [FullVideo](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L33-L44) |
-| Get Channel Details | `/get_channel` | `url` (`/@[...]` or `/channel/[...]`) | `POST` | [DepthChannel](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L46C1-L64C2) |
-| Get A Channel's Videos | `/get_channel_videos` | `url` (`/@[...]` or `/channel/[...]`) | `POST` | [ReducedVideo[]](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L10-L21) |
+| Search | `/search` | `query` | `POST` | [ReducedVideo[]](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L23-L34) | 
+| Get Playlist Details | `/get_playlist` | `url` | `POST` | [Playlist](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L3-L14) |
+| Get Video Details | `/get_video` | `url` | `POST` | [FullVideo](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L46-L57) |
+| Get Channel Details | `/get_channel` | `url` (`/@[...]` or `/channel/[...]`) | `POST` | [DepthChannel](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L59-L77) |
+| Get A Channel's Videos | `/get_channel_videos` | `url` (`/@[...]` or `/channel/[...]`) | `POST` | [ReducedVideo[]](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L23-L34) |
 
 ## Examples
 Fetching information on a YouTube video:
