@@ -12,7 +12,7 @@ exports.ReducedVideo = class {
         this.title = title;
         this.thumbnail = thumbnail;
         this.url = url;
-        this.channel = channel;
+        this.channel = channel; // ReducedChannel
         this.views = views;
         this.length = length;
         this.released_relatively = released_relatively;
@@ -39,6 +39,6 @@ exports.FullVideo = class {
         this.release_date = release_date;
         this.released_relatively = released_relatively;
         this.description = description;
-        this.channel = channel;
+        this.channel = channel; // FullChannel
     }
 }
