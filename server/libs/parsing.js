@@ -17,6 +17,10 @@ exports.ytInitialData =  html => {
     }
 }
 
+exports.channelVideos = data => {
+    return data
+}
+
 exports.channelData = data => {
     const metadata = data.metadata.channelMetadataRenderer;
     const header = data.header.c4TabbedHeaderRenderer;

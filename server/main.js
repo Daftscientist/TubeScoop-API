@@ -13,6 +13,7 @@ app.use('/search', require('./routes/search'));
 app.use('/get_video', require('./routes/get_video'));
 app.use('/get_playlist', require('./routes/get_playlist'));
 app.use('/get_channel', require('./routes/get_channel'));
+app.use('/get_channel_videos', require('./routes/get_channel_videos'));
 
 // --- Error Handling ---
 app.use((err, req, res, next) => {
