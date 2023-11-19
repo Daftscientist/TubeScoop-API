@@ -7,6 +7,10 @@ This project is a Node.js application that uses the Express.js framework to crea
 
 ## Routes
 
+| Name  | Path | Body Content | Protocal | Response |
+| ------------- | ------------- | ------------- |------------- |------------- |
+| Search | `/search` | `query` | `POST` | [[ReducedVideo]](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L10) | 
+
 - **Search**: The `/search` endpoint accepts a `POST` request with a query in the request body and returns a list of videos that match the search term and their corresponding information.
 
 - **Get Playlist Details**: The `/get_playlist` endpoint accepts a `POST` request with a YouTube playlist URL in the request body. It returns detailed information about the specified playlist and information on each video.
