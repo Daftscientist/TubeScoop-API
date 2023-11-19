@@ -11,7 +11,9 @@ This project is a Node.js application that uses the Express.js framework to crea
 
 - **Get Playlist Details**: The `/get_playlist` endpoint accepts a `POST` request with a YouTube playlist URL in the request body. It returns detailed information about the specified playlist and information on each video.
 
-- **Get Video Details**: The `/get_video` endpoint also accepts a `POST` request with a YouTube video URL in the request body. It returns detailed information about the specified video.
+- **Get Video Details**: The `/get_video` endpoint accepts a `POST` request with a YouTube video URL in the request body. It returns detailed information about the specified video.
+
+- **Get Channel Details**: The `/get_channel` endpoint accepts a `POST` request with a YouTube channel url (`/@[...]` or `/channel/[...]`) in the request body. It returns detailed information about the specified channel. 
 
 ## Error Handling
 
