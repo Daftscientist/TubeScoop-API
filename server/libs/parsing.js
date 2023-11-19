@@ -26,14 +26,23 @@ exports.playlistData = data => {
 
         const channel = new ReducedChannel(video.shortBylineText.runs[0].text, `https://www.youtube.com${video.shortBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url}`);
 
+        video.title.runs[0].text,
+        video.thumbnail.thumbnails[0].url,
+        reform_url(video.videoId),
+        channel,
+        video.lengthText.simpleText,
+        video.videoInfo.runs[2].text,
+        video.videoId
+
         return new ReducedVideo(
-            video.title.runs[0].text,
-            video.thumbnail.thumbnails[0].url,
-            reform_url(video.videoId),
+            title=video.title.runs[0].text,
+            thumbnail=video.thumbnail.thumbnails[0].url,
+            url=reform_url(video.videoId),
             channel,
-            video.lengthText.simpleText,
-            video.videoInfo.runs[2].text,
-            video.videoId
+            views=video.videoInfo.runs[0].text,
+            length=video.lengthText.simpleText,
+            released_relatively=video.videoInfo.runs[2].text,
+            id=video.videoId
         )
     })
 
