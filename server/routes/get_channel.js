@@ -14,7 +14,9 @@ router.post('/', async (req, res, next) => {
         return res.status(400).send('No channel url provided');
     }
 
-    if (!req.body.url.match(`(?:(?:http|https):\/\/|)(?:www\.|)youtube\.com\/(channel|user)\/([A-Z][a-zA-Z0-9\-_]{1,})`)){
+    // regex to identify if the url is in this format https://www.youtube.com/@ChannelName
+    
+    if (!req.body.url.match(`^https?:\/\/(?:www\.)?youtube\.com\/@[a-zA-Z0-9_-]+`)){
         return res.status(400).send('Invalid youtube channel url');
     }
 
