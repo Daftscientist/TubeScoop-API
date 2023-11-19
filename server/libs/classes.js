@@ -1,4 +1,4 @@
-// classes made to standardize the data that is sent to the client
+// Classes made to standardize the data that is sent to the client
 
 exports.ReducedChannel = class {
     constructor(name, url) {
