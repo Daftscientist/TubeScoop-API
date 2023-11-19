@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const { ytInitialData, searchData } = require('../helpers/parsing');
+const { ytInitialData, searchData } = require('../libs/parsing');
 
 router.post('/', async (req, res, next) => {
     if (!req.body.query) {

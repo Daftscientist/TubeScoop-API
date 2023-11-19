@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const { ytInitialData, videoData } = require('../helpers/parsing');
+const { ytInitialData, videoData } = require('../libs/parsing');
 
 const YOUTUBE_VIDEO = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
 
