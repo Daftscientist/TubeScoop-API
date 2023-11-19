@@ -10,14 +10,9 @@ This project is a Node.js application that uses the Express.js framework to crea
 | Name  | Path | Body Content | Protocal | Response |
 | ------------- | ------------- | ------------- |------------- |------------- |
 | Search | `/search` | `query` | `POST` | [[ReducedVideo]](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L10) | 
-
-- **Search**: The `/search` endpoint accepts a `POST` request with a query in the request body and returns a list of videos that match the search term and their corresponding information.
-
-- **Get Playlist Details**: The `/get_playlist` endpoint accepts a `POST` request with a YouTube playlist URL in the request body. It returns detailed information about the specified playlist and information on each video.
-
-- **Get Video Details**: The `/get_video` endpoint accepts a `POST` request with a YouTube video URL in the request body. It returns detailed information about the specified video.
-
-- **Get Channel Details**: The `/get_channel` endpoint accepts a `POST` request with a YouTube channel url (`/@[...]` or `/channel/[...]`) in the request body. It returns detailed information about the specified channel. 
+| Get Playlist Details | `/get_playlist` | `url` | `POST` | [[ReducedVideo]](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L10) |
+| Get Video Details | `/get_video` | `url` | `POST` | [FullVideo](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L33) |
+| Get Channel Details | `/get_channel` | `url` (`/@[...]` or `/channel/[...]`) | `POST` | [DepthChannel](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L46) |
 
 ## Error Handling
 
