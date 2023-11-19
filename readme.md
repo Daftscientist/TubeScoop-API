@@ -1,6 +1,6 @@
 # YouTube Information Fetcher
 
-This project is a Node.js application that uses the Express.js framework to create a simple YouTube video information fetcher. 
+This project is a Node.js application that uses the Express.js framework to create a simple YouTube information fetcher. 
 
 ## Features
 
