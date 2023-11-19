@@ -13,6 +13,7 @@ This project is a Node.js application that uses the Express.js framework to crea
 | Get Playlist Details | `/get_playlist` | `url` | `POST` | [[ReducedVideo]](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L10-L21) |
 | Get Video Details | `/get_video` | `url` | `POST` | [FullVideo](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L33-L44) |
 | Get Channel Details | `/get_channel` | `url` (`/@[...]` or `/channel/[...]`) | `POST` | [DepthChannel](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L46C1-L64C2) |
+| Get A Channel's Videos | `/get_channel_videos` | `url` (`/@[...]` or `/channel/[...]`) | `POST` | [[ReducedVideo]](https://github.com/Daftscientist/youtube-fetcher/blob/main/server/libs/classes.js#L10-L21) |
 
 ## Error Handling
 

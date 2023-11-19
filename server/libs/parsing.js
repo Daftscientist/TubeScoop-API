@@ -18,7 +18,27 @@ exports.ytInitialData =  html => {
 }
 
 exports.channelVideos = data => {
-    return data
+    const base = data.contents.twoColumnBrowseResultsRenderer.tabs[1].tabRenderer.content.richGridRenderer.contents;
+
+    return base.filter(item => item.richItemRenderer)
+    .map(({ richItemRenderer: video }) => {
+        //video.content.videoRenderer.videoId;
+        let channel = new ReducedChannel(
+            name = data.metadata.channelMetadataRenderer.title,
+            url = data.metadata.channelMetadataRenderer.channelUrl
+        );
+
+        return new ReducedVideo(
+            title=video.content.videoRenderer.title.runs[0].text,
+            thumbnail=video.content.videoRenderer.thumbnail.thumbnails[0].url,
+            url=reform_url(video.content.videoRenderer.videoId),
+            channel=channel,
+            views=video.content.videoRenderer.viewCountText.simpleText,
+            length=video.content.videoRenderer.lengthText.simpleText,
+            released_relatively=video.content.videoRenderer.publishedTimeText.simpleText,
+            id=video.content.videoRenderer.videoId
+        )
+    })
 }
 
 exports.channelData = data => {

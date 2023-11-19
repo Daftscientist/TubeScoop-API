@@ -23,7 +23,7 @@ router.post('/', async (req, res, next) => {
     }
 
     try {
-        const response = await axios.get(req.body.url);
+        const response = await axios.get(req.body.url + '/videos');
         return res.json(channelVideos(ytInitialData(response.data)));
     } catch (err) {
         next(err);
