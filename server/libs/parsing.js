@@ -17,6 +17,11 @@ exports.ytInitialData =  html => {
     }
 }
 
+exports.channelData = data => {
+    const base = data.contents
+    return base
+}
+
 exports.playlistData = data => {
     const base = data.contents.twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].itemSectionRenderer.contents[0].playlistVideoListRenderer.contents;
 

@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/search', require('./routes/search'));
 app.use('/get_video', require('./routes/get_video'));
 app.use('/get_playlist', require('./routes/get_playlist'));
+app.use('/get_channel', require('./routes/get_channel'));
 
 // --- Error Handling ---
 app.use((err, req, res, next) => {
