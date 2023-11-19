@@ -1,6 +1,10 @@
-const reform_url = id => `https://www.youtube.com/watch?v=${id}`;
+// --- Internal Imports ---
 const { ReducedChannel, ReducedVideo, FullChannel, FullVideo } = require('./classes');
 
+// --- Local Functions --- 
+const reform_url = id => `https://www.youtube.com/watch?v=${id}`;
+
+// --- Exported Function ---
 exports.ytInitialData =  html => {
     // REGEX to isolate the variable ytInitialData from the html content.
     const match = html.match(/var\s+ytInitialData\s*=\s*({[^;]+);/);
@@ -14,6 +18,7 @@ exports.ytInitialData =  html => {
     }
 }
 
+// --- Exported Function ---
 exports.playlistData = data => {
     const base = data.contents.twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].itemSectionRenderer.contents[0].playlistVideoListRenderer.contents;
 
@@ -36,6 +41,7 @@ exports.playlistData = data => {
 
 }
 
+// --- Exported Function ---
 exports.searchData = data => {
     const base = data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;
     return base
@@ -61,6 +67,7 @@ exports.searchData = data => {
         });
 }
 
+// --- Exported Function ---
 exports.videoData = data => {
     const base = data.contents.twoColumnWatchNextResults;
     const resultsContents = base.results.results.contents;
