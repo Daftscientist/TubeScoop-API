@@ -28,7 +28,7 @@ You should see the message "Server is running on port 3000" in the console.
 - Add more endpoints to fetch other types of data from YouTube.
 - Improve error handling to provide more detailed error messages.
 - Add tests to ensure the reliability of the application.
-- Standardise the response as: small, large and regular video data.
+- ~~Standardise the response as: small, large and regular video data.~~
 
 ## Contributing
 
