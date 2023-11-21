@@ -22,13 +22,16 @@ router.post('/', async (req, res, next) => {
     if (!req.body.query) {
         return res.status(400).send('No search term provided');
     }
+    if (!req.body.enable_suggestions) {
+        req.body.enable_suggestions = false;
+    }
 
     try {
         const response = await axios.get(`https://www.youtube.com/results?search_query=${req.body.query}`);
         //console.log(whatIsIt(ytInitialData(response.data)))
         const data = ytInitialData(response.data);
         // loop through every item in 
-        const videos = parseSearch(data);
+        const videos = parseSearch(data, req.body.enable_suggestions);
         res.json( videos)
     } catch (err) {
         next(err);
