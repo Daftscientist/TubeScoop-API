@@ -3,7 +3,9 @@ const express = require('express');
 const axios = require('axios');
 
 // --- Internal Imports ---
-const { ytInitialData, searchData, decideType } = require('../libs/parsing');
+//const { ytInitialData, searchData, decideType } = require('../libs/parsing');
+const { ytInitialData, parseSearch } = require('../libs/updated_parsing');
+
 
 // --- Persistant Instances ---
 const router = express.Router();
@@ -21,25 +23,13 @@ router.post('/', async (req, res, next) => {
         return res.status(400).send('No search term provided');
     }
 
-
     try {
         const response = await axios.get(`https://www.youtube.com/results?search_query=${req.body.query}`);
         //console.log(whatIsIt(ytInitialData(response.data)))
         const data = ytInitialData(response.data);
         // loop through every item in 
-        const base = data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;
-        const videos = [];
-        for (let i = 0; i < base.length; i++) {
-            try {
-                const type = decideType(base[i]);
-                res.send("hi");
-            }
-            catch (e) {
-                //Handle the error if you wish.
-            }
-            
-        }
-        //return videos
+        const videos = parseSearch(data);
+        res.json( videos)
     } catch (err) {
         next(err);
     }

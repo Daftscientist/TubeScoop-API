@@ -121,10 +121,48 @@ exports.playlistVideos = data => {
 
 exports.decideType = item => {
     const type = Object.keys(item)[0];
-    console.log(type)
-    // videoRenderer
-    // playlistRenderer
-    // reelShelfRenderer
+    if (type === 'reelShelfRenderer') {
+        console.log("shorts")
+    }
+    if (type === 'videoRenderer') {
+        console.log("video")
+    }
+    if (type === 'playlistRenderer') {
+        console.log("playlist")
+    }
+    if (type === 'channelRenderer') {
+        console.log("channel")
+        console.log(item.channelRenderer)
+    }
+    if (type === 'reelItemRenderer') {
+        console.log("shelf for shorts")
+    }
+
+
+    ``` - {"query": "best music playlists"}
+    videoRenderer
+playlistRenderer
+videoRenderer
+videoRenderer
+playlistRenderer
+videoRenderer
+playlistRenderer
+playlistRenderer
+videoRenderer
+videoRenderer
+playlistRenderer
+playlistRenderer
+shelfRenderer
+videoRenderer
+playlistRenderer
+videoRenderer
+videoRenderer
+videoRenderer
+reelShelfRenderer
+videoRenderer
+videoRenderer
+videoRenderer
+    ```
 }
 
 exports.searchData = data => {
