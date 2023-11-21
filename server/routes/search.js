@@ -8,6 +8,13 @@ const { ytInitialData, searchData } = require('../libs/parsing');
 // --- Persistant Instances ---
 const router = express.Router();
 
+// --- Variables ---
+const filters = {
+    minimum_likes: 0,
+    minimum_views: 0,
+    minimum_length: 0,
+}
+
 // --- Routes ---
 router.post('/', async (req, res, next) => {
     if (!req.body.query) {
