@@ -6,7 +6,7 @@ const reform_url = id => `https://www.youtube.com/watch?v=${id}`;
 
 exports.ytInitialData =  html => {
     // REGEX to isolate the variable ytInitialData from the html content.
-    const match = html.match(/var\s+ytInitialData\s*=\s*({[^;]+);/);
+    const match = html.match(/var\s+ytInitialData\s*=\s*({[\s\S]*?});<\/script>/);
     // Check if there is a match and extract the value
     if (match && match[1]) {
         try {
@@ -119,11 +119,28 @@ exports.playlistVideos = data => {
 
 }
 
+exports.decideType = item => {
+    const type = Object.keys(item)[0];
+    console.log(type)
+    // videoRenderer
+    // playlistRenderer
+    // reelShelfRenderer
+}
+
 exports.searchData = data => {
+    //return data
     const base = data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;
+    //return base
     return base
         .filter(item => item.videoRenderer)
         .map(({ videoRenderer: video }) => {
+            return video
+            if (video.badges?.[0]?.metadataBadgeRenderer.style === 'BADGE_STYLE_TYPE_LIVE_NOW') {
+                // this is a live video
+                console.log('live video')
+            }
+
+
             let VIEWS = video.viewCountText.simpleText;
             if (video.viewCountText.runs && video.viewCountText.runs[1]) {
                 VIEWS = video.viewCountText.runs[0].text;
