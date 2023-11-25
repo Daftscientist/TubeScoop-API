@@ -1,5 +1,15 @@
+const { ReducedChannel, ReducedPlaylist, ReducedVideo } = require('./new_classes.js');
 
 // This file is used to parse the data from the youtube api
+
+const fs = require('fs');
+
+const appendToTextFile = ( data) => {
+  var stream = fs.createWriteStream('debug-logs.txt', {'flags': 'a'});
+  stream.once('open', function(fd) {
+    stream.write(data+"\r\n");
+  });
+}
 
 const ytInitialData =  html => {
     // REGEX to isolate the variable ytInitialData from the html content.
@@ -15,41 +25,44 @@ const ytInitialData =  html => {
 }
 
 
-
 const ParseVideo = video => {
-    return {
-        title: video.title.runs[0].text,
-        thumbnail: video.thumbnail.thumbnails[0].url,
-        url: `https://www.youtube.com/watch?v=${video.videoId}`,
-        channel: {
-            name: video.ownerText.runs[0].text,
-            url: `https://www.youtube.com${video.ownerText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
-        },
-        views: video.viewCountText.simpleText,
-        length: video.lengthText.simpleText,
-        released_relatively: video.publishedTimeText.simpleText,
-        id: video.videoId
-    
-    }
+    const channel = new ReducedChannel(
+        video.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.browseId,
+        video.shortBylineText.runs[0].text,
+        `https://www.youtube.com${video.shortBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
+        video.channelThumbnailSupportedRenderers.channelThumbnailWithLinkRenderer.thumbnail.thumbnails
+    )
+    return new ReducedVideo(
+        video.videoId,
+        video.title.runs[0].text,
+        `https://www.youtube.com${video.navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
+        video.thumbnail.thumbnails,
+        video.viewCountText.simpleText,
+        video.lengthText.simpleText,
+        video.publishedTimeText.simpleText,
+        channel
+    )
 }
 
 const ParsePlaylist = playlist => {
-    return {
-        title: playlist.title.simpleText,
-        thumbnail: playlist.thumbnail.thumbnails[0].url,
-        url: `https://www.youtube.com${playlist.navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
-        channel: {
-            name: playlist.shortBylineText.runs[0].text,
-            url: `https://www.youtube.com${playlist.shortBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
-        },
-        video_count: playlist.videoCount,
-        id: playlist.playlistId
     
-    }
+    return new ReducedPlaylist(
+        playlist.playlistId,
+        playlist.title.simpleText,
+        `https://www.youtube.com${playlist.navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
+        playlist.thumbnailRenderer.playlistVideoThumbnailRenderer.thumbnail.thumbnails,
+        playlist.videoCount,
+        //channel
+    )
 }
 
 const ParseChannel = channel => {
-    return {}
+    return new ReducedChannel(
+        channel.channelId,
+        channel.title.simpleText,
+        `https://www.youtube.com${channel.navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
+        channel.thumbnail.thumbnails
+    )
 }
 
 const ParseShort = short => {
@@ -57,32 +70,15 @@ const ParseShort = short => {
 }
 
 const ParseShelf = shelf => {
-    if (Object.keys(shelf.content.verticalListRenderer.items)[0] === "videoRenderer") {
-        videos_in_shelf = ["shelf"]
-        for (let i = 0; i < shelf.content.verticalListRenderer.items.length; i++) {
-            if (shelf.content.verticalListRenderer.items[i].videoRenderer) {
-                videos_in_shelf.push(ParseVideo(shelf.content.verticalListRenderer.items[i].videoRenderer))
-            }
-        }
-    }
-    else if (shelf.title.simpleText === "Shorts") {
-        return shelf
-    }
-    else {
-        return shelf
-    }
+    // how to deal with a shelf?
+    return {"shelf would be here": "shelf"}
 }
 
-const SearchCheck = (item, enable_suggestions) => {
+const SearchCheck = (item) => {
+    
     const type = Object.keys(item)[0];
-    if (type === 'reelShelfRenderer') {
-        if (!enable_suggestions) {
-            // !!!!!!!!!!!!!!! MAKE A Different check for shorts !!!!!!!!!!!!!!
-            return null//ParseShelf(item.reelShelfRenderer)
-        }
-        return ParseShelf(item.reelShelfRenderer)
-    }
-    else if (type === 'videoRenderer') {
+
+    if (type === 'videoRenderer') {
         return ParseVideo(item.videoRenderer)
     }
     else if (type === 'playlistRenderer') {
@@ -91,41 +87,42 @@ const SearchCheck = (item, enable_suggestions) => {
     else if (type === 'channelRenderer') {
         return ParseChannel(item.channelRenderer)
     }
-    else if (type === 'reelItemRenderer') {
-        if (!enable_suggestions) {
-            // !!!!!!!!!!!!!!! MAKE A Different check for shorts !!!!!!!!!!!!!!
-            return null//ParseShelf(item.reelShelfRenderer)
-        }
-        return ParseShort(item.reelItemRenderer)
-    }
-    else if (type === 'shelfRenderer') {
-        if (!enable_suggestions) {
-            // !!!!!!!!!!!!!!! MAKE A Different check for shorts !!!!!!!!!!!!!!
-            return null//ParseShelf(item.reelShelfRenderer)
-        }
-        return ParseShelf(item.shelfRenderer)
-    }
-    else if (type === 'adSlotRenderer') {
-        return null
-        // Add option to enable ads
-    }
-    else {
-        return item
-    }
+    else if (type === 'reelShelfRenderer') {}
+    else if (type === 'shelfRenderer') {}
+    else {}
 }
 
 
-const parseSearch = (data, enable_suggestions) => {
-    const base = data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;
+const parseSearch = (data, enable_suggestions, include_ads, enable_shorts) => {
+    const items = data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents;
     const videos = [];
-    for (let i = 0; i < base.length; i++) {
-        try {
-            const result = SearchCheck(base[i], enable_suggestions);
-            videos.push(result)
-        } catch (e) {
-            // Handle the error if you wish. nah
+
+    items.forEach(item => {
+        const itemType = Object.keys(item)[0];
+
+        if (itemType === 'adSlotRenderer') {
+            console.log('ad: ', item);
+        } else if (itemType === 'itemSectionRenderer') {
+            const contents = item.itemSectionRenderer.contents;
+
+            contents.forEach(content => {
+                const contentType = Object.keys(content)[0];
+
+                if (contentType === 'videoRenderer') {
+                    videos.push('video :)');
+                } else if (contentType === 'playlistRenderer') {
+                    videos.push('playlist :)');
+                } else if (contentType === 'channelRenderer') {
+                    videos.push('channel :)');
+                }
+            });
+        } else if (itemType === 'continuationItemRenderer') {
+            // item.continuationItemRenderer.continuationEndpoint.continuationCommand.token
+            // this gets the token for the next page of results
+            // not sure how to implement  yet
         }
-    }
+    });
+
     return videos;
 }
 

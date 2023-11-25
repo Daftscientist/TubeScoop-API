@@ -25,13 +25,20 @@ router.post('/', async (req, res, next) => {
     if (!req.body.enable_suggestions) {
         req.body.enable_suggestions = false;
     }
+    if (!req.body.include_ads) {
+        req.body.include_ads = false;
+    }
+    if (!req.body.enable_shorts) {
+        req.body.enable_shorts = false;
+    }
 
     try {
         const response = await axios.get(`https://www.youtube.com/results?search_query=${req.body.query}`);
         //console.log(whatIsIt(ytInitialData(response.data)))
         const data = ytInitialData(response.data);
         // loop through every item in 
-        const videos = parseSearch(data, req.body.enable_suggestions);
+        // this is for video search
+        const videos = parseSearch(data);
         res.json( videos)
     } catch (err) {
         next(err);
