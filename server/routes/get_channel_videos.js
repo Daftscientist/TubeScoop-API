@@ -4,6 +4,7 @@ const axios = require('axios');
 
 // --- Internal Imports ---
 const { ytInitialData, channelVideos } = require('../libs/parsing');
+const { validateChannelUrl } = require('../libs/validate');
 
 // --- Persistant Instances ---
 const router = express.Router();
@@ -13,13 +14,9 @@ router.post('/', async (req, res, next) => {
     if (!req.body.url) {
         return res.status(400).send('No channel url provided');
     }
-
-    // regex to identify if the url is in this format https://www.youtube.com/@ChannelName and https://www.youtube.com/channel/ChannelID
     
-    const youtubeUrlRegex = /^https?:\/\/(?:www\.)?youtube\.com\/(?:@[\w-]+|channel\/[\w-]+)/;
-
-    if (!youtubeUrlRegex.test(req.body.url)){
-        return res.status(400).send('Invalid youtube channel url');
+    if (!validateChannelUrl(req.body.url)) {
+        return res.status(400).send('Invalid channel url');
     }
 
     try {

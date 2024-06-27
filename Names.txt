@@ -1,16 +1,23 @@
-
-hii
-hii
-hii
-hii
-hii
-hii
-hii
-hii
-hii
-hii
-hii
-hii
-hii
-hii
-hii
+        if (itemType === 'itemSectionRenderer') {
+            const contents = item.itemSectionRenderer.contents;
+            contents.forEach(content => {
+                const contentType = Object.keys(content)[0];
+                const parsed = SearchCheck(content);
+                if (parsed) {
+                    if (parsed instanceof ReducedVideo) {
+                        videos.push(parsed)
+                    }
+                    else if (parsed instanceof ReducedPlaylist) {
+                        playlists.push(parsed)
+                    }
+                    else if (parsed instanceof ReducedChannel) {
+                        channels.push(parsed)
+                    }
+                    else if (parsed instanceof ReducedShort) {
+                        shorts.push(parsed)
+                    }
+                    else if (parsed instanceof ReducedShelf) {
+                        shelves.push(parsed)
+                    }
+                }
+            });

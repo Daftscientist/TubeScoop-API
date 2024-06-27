@@ -22,14 +22,14 @@ router.post('/', async (req, res, next) => {
     if (!req.body.query) {
         return res.status(400).send('No search term provided');
     }
-    if (!req.body.enable_suggestions) {
-        req.body.enable_suggestions = false;
+    if (!req.body.include_suggestions) {
+        req.body.include_suggestions = false;
     }
     if (!req.body.include_ads) {
         req.body.include_ads = false;
     }
-    if (!req.body.enable_shorts) {
-        req.body.enable_shorts = false;
+    if (!req.body.include_shorts) {
+        req.body.include_shorts = false;
     }
 
     try {
@@ -38,7 +38,7 @@ router.post('/', async (req, res, next) => {
         const data = ytInitialData(response.data);
         // loop through every item in 
         // this is for video search
-        const videos = parseSearch(data);
+        const videos = parseSearch(data, req.body.include_suggestions, req.body.include_ads, req.body.include_shorts);
         res.json( videos)
     } catch (err) {
         next(err);

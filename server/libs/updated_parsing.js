@@ -37,9 +37,9 @@ const ParseVideo = video => {
         video.title.runs[0].text,
         `https://www.youtube.com${video.navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
         video.thumbnail.thumbnails,
-        video.viewCountText.simpleText,
-        video.lengthText.simpleText,
-        video.publishedTimeText.simpleText,
+        'viewcount',//video.viewCountText.simpleText,
+        'length',//video.lengthText.simpleText,
+        'publishedat',//video.publishedTimeText.simpleText,
         channel
     )
 }
@@ -66,7 +66,7 @@ const ParseChannel = channel => {
 }
 
 const ParseShort = short => {
-    return short
+    return {"short would be here": "short"}
 }
 
 const ParseShelf = shelf => {
@@ -78,20 +78,50 @@ const SearchCheck = (item) => {
     
     const type = Object.keys(item)[0];
 
-    if (type === 'videoRenderer') {
-        return ParseVideo(item.videoRenderer)
-    }
-    else if (type === 'playlistRenderer') {
-        return ParsePlaylist(item.playlistRenderer)
-    }
-    else if (type === 'channelRenderer') {
-        return ParseChannel(item.channelRenderer)
-    }
-    else if (type === 'reelShelfRenderer') {}
-    else if (type === 'shelfRenderer') {}
-    else {}
+    // use type check things
+
 }
 
+
+const handleContinuationRenderer = (item) => {
+    const continuationToken = item.continuationItemRenderer.continuationEndpoint.continuationCommand.token;
+
+    // use the token to get more data with axios
+    console.log( continuationToken);
+
+}
+
+const handleItemSectionRenderer = (item, videos) => {
+    item.itemSectionRenderer.contents.forEach(video => {
+        const type = Object.keys(video)[0];
+        if (type === 'videoRenderer') {
+            videos.push(ParseVideo(video.videoRenderer));
+        }
+        else if (type === 'playlistRenderer') {
+            videos.push(ParsePlaylist(video.playlistRenderer));
+        }
+        else if (type === 'channelRenderer') {
+            videos.push(ParseChannel(video.channelRenderer));
+        }
+        else if (type === 'reelItemRenderer') {
+            videos.push(ParseShort(video.reelItemRenderer));
+        }
+        else if (type === 'reelShelfRenderer') {
+            videos.push(ParseShelf(video.reelShelfRenderer));
+        }if (type === 'playlistRenderer') {
+            videos.push(ParsePlaylist(video.playlistRenderer));
+        }
+        else if (type === 'channelRenderer') {
+            videos.push(ParseChannel(video.channelRenderer));
+        }
+        else if (type === 'reelItemRenderer') {
+            videos.push(ParseShort(video.reelItemRenderer));
+        }
+        else if (type === 'reelShelfRenderer') {
+            videos.push(ParseShelf(video.reelShelfRenderer));
+        }
+    });
+}
 
 const parseSearch = (data, enable_suggestions, include_ads, enable_shorts) => {
     const items = data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents;
@@ -100,31 +130,72 @@ const parseSearch = (data, enable_suggestions, include_ads, enable_shorts) => {
     items.forEach(item => {
         const itemType = Object.keys(item)[0];
 
-        if (itemType === 'adSlotRenderer') {
-            console.log('ad: ', item);
-        } else if (itemType === 'itemSectionRenderer') {
-            const contents = item.itemSectionRenderer.contents;
-
-            contents.forEach(content => {
-                const contentType = Object.keys(content)[0];
-
-                if (contentType === 'videoRenderer') {
-                    videos.push('video :)');
-                } else if (contentType === 'playlistRenderer') {
-                    videos.push('playlist :)');
-                } else if (contentType === 'channelRenderer') {
-                    videos.push('channel :)');
-                }
-            });
-        } else if (itemType === 'continuationItemRenderer') {
-            // item.continuationItemRenderer.continuationEndpoint.continuationCommand.token
-            // this gets the token for the next page of results
-            // not sure how to implement  yet
+        if (itemType === 'itemSectionRenderer') {
+            handleItemSectionRenderer(item, videos);
         }
+        else if (itemType === 'continuationItemRenderer') {
+            handleContinuationRenderer(item)
+        }
+        else if (itemType === 'searchPyvRenderer') {
+            // handle this
+            console.log("searchPyvRenderer")
+        }
+        else if (itemType === 'searchVerticalRenderer') {
+            console.log("searchVerticalRenderer")
+        }
+        else if (itemType === 'searchRefinementCardRenderer') {
+            console.log("searchRefinementCardRenderer")
+        }
+        else if (itemType === 'searchRefinementRenderer') {
+            console.log("searchRefinementRenderer")
+        }
+        else if (itemType === 'searchSuggestionRenderer') {
+            console.log("searchSuggestionRenderer")
+        }
+        else if (itemType === 'searchHistoryQueryRenderer') {
+            console.log("searchHistoryQueryRenderer")
+        }
+        else if (itemType === 'searchHistorySuggestionRenderer') {
+            console.log("searchHistorySuggestionRenderer")
+        }
+        else if (itemType === 'searchFilterGroupRenderer') {
+            console.log("searchFilterGroupRenderer")
+        }
+        else if (itemType === 'searchMessageRenderer') {
+            console.log("searchMessageRenderer")
+        }
+        else if (itemType === 'searchEmptyRenderer') {
+            console.log("searchEmptyRenderer")
+        }
+        else if (itemType === 'searchSpellingSuggestionRenderer') {
+            console.log("searchSpellingSuggestionRenderer")
+        }
+        else if (itemType === 'searchPivotRenderer') {
+            console.log("searchPivotRenderer")
+        }
+        else if (itemType === 'searchSponsorRenderer') {
+            console.log("searchSponsorRenderer")
+        }
+        else if (itemType === 'searchSponsorCarouselRenderer') {
+            console.log("searchSponsorCarouselRenderer")
+        }
+        else if (itemType === 'searchSponsorVideoRenderer') {
+            console.log("searchSponsorVideoRenderer")
+        }
+        else if (itemType === 'searchSponsorTextRenderer') {
+            console.log("searchSponsorTextRenderer")
+        }
+        else if (itemType === 'searchSponsorshipRenderer') {
+            console.log("searchSponsorshipRenderer")
+        }
+        else if (itemType === 'searchSponsorshipCarouselRenderer') {
+            console.log("searchSponsorshipCarouselRenderer")
+        }
+
     });
 
     return videos;
-}
+};
 
 exports.ytInitialData = ytInitialData;
 exports.parseSearch = parseSearch;

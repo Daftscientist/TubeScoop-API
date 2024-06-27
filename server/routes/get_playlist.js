@@ -10,6 +10,7 @@ const router = express.Router();
 
 // --- Route ---
 router.post('/', async (req, res, next) => {
+    // responds with ReducedVideo objects and ReducedChannel object
     if (!req.body.url) {
         return res.status(400).send('No url provided');
     }
