@@ -11,10 +11,59 @@ const { ytInitialData, parseSearch } = require('../libs/updated_parsing');
 const router = express.Router();
 
 // --- Variables ---
-const filters = {
-    minimum_likes: 0,
-    minimum_views: 0,
-    minimum_length: 0,
+const search_filters = {
+    "UPLOAD_DATE": {
+        "options": [
+            "Last hour",
+            "Today",
+            "This week",
+            "This month",
+            "This year"
+        ],
+        "selected_option": null
+    },
+    "TYPE": {
+        "options": [
+            "Video",
+            "Channel",
+            "Playlist",
+            "Film"
+        ],
+        "selected_option": null
+    },
+    "DURATION": {
+        "options": [
+            "Under 4 minutes",
+            "4–20 minutes",
+            "Over 20 minutes"
+        ],
+        "selected_option": null
+    },
+    "FEATURES": {
+        "options": [
+            "Live",
+            "4K",
+            "HD",
+            "Subtitles/CC",
+            "Creative Commons",
+            "360°",
+            "VR180",
+            "3D",
+            "HDR",
+            "Location",
+            "Purchased"
+        ],
+        "selected_options": []
+    },
+    "SORT_BY": {
+        "options": [
+            "Relevance",
+            "Upload date",
+            "View count",
+            "Rating"
+        ],
+        "selected_option": null
+    }
 }
 
 // --- Routes ---
