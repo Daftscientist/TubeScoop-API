@@ -200,7 +200,7 @@
                         <li><strong>title:</strong> The title of the video.</li>
                         <li><strong>thumbnail:</strong> URL of the video's thumbnail image.</li>
                         <li><strong>url:</strong> The URL of the video.</li>
-                        <li><strong>channel:</strong> Channel details (ReducedChannel).</li>
+                        <li><strong>channel:</strong> Channel details (<a href="#reducedchannel" class="response-tag">ReducedChannel</a>).</li>
                         <li><strong>views:</strong> Number of views the video has.</li>
                         <li><strong>length:</strong> Duration of the video.</li>
                         <li><strong>released_relatively:</strong> The time since the video was released.</li>
@@ -221,7 +221,7 @@
                         <li><strong>release_date:</strong> The release date of the video.</li>
                         <li><strong>released_relatively:</strong> The time since the video was released.</li>
                         <li><strong>description:</strong> Description of the video.</li>
-                        <li><strong>channel:</strong> Channel details (FullChannel).</li>
+                        <li><strong>channel:</strong> Channel details (<a href="#fullchannel" class="response-tag">FullChannel</a>).</li>
                     </ul>
                 </div>
                 <div class="response-structure p-4 mb-4" id="playlist">
@@ -234,11 +234,24 @@
                         <li><strong>title:</strong> The title of the playlist.</li>
                         <li><strong>thumbnail:</strong> URL of the playlist's thumbnail image.</li>
                         <li><strong>url:</strong> The URL of the playlist.</li>
-                        <li><strong>creator:</strong> Creator details (ReducedChannel).</li>
+                        <li><strong>creator:</strong> Creator details (<a href="#reducedchannel" class="response-tag">ReducedChannel</a>).</li>
                         <li><strong>description:</strong> Description of the playlist.</li>
                         <li><strong>video_count:</strong> Number of videos in the playlist.</li>
                         <li><strong>id:</strong> Unique identifier for the playlist.</li>
-                        <li><strong>videos:</strong> List of videos in the playlist (ReducedVideo[]).</li>
+                        <li><strong>videos:</strong> List of videos in the playlist (Array[<a href="#reducedvideo" class="response-tag">ReducedVideo</a>]).</li>
+                    </ul>
+                </div>
+                <div class="response-structure p-4 mb-4" id="fullchannel">
+                    <h3 class="text-2xl font-semibold">
+                        FullChannel
+                        <a href="#fullchannel" class="text-blue-400 hover:underline anchor-icon"><i class="fas fa-anchor"></i></a>
+                    </h3>
+                    <ul class="list-disc list-inside mb-4">
+                        <li><strong>name:</strong> The name of the channel.</li>
+                        <li><strong>subscribers:</strong> The number of subscribers the channel has.</li>
+                        <li><strong>verified:</strong> Indicates whether the channel is verified.</li>
+                        <li><strong>url:</strong> The URL of the channel.</li>
+                        <li><strong>profile_picture:</strong> URL to the channel's profile picture.</li>
                     </ul>
                 </div>
                 <div class="response-structure p-4 mb-4" id="depthchannel">
