@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TubeScoop API Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+
+        .sidebar {
+            background-color: #2d3748;
+            color: #e2e8f0;
+        }
+
+        .code-block {
+            background-color: #2d3748;
+            color: #f7fafc;
+            border-radius: 0.375rem;
+        }
+
+        .card {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border-radius: 0.375rem;
+        }
+
+        .card h3 {
+            color: #edf2f7;
+        }
+
+        .card p {
+            color: #e2e8f0;
+        }
+
+        .response-info {
+            background-color: #4a5568;
+            color: #e2e8f0;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .response-structure {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .anchor-icon {
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+
+        .response-tag {
+            color: #63b3ed;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 dark-mode">
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 h-screen p-4 sidebar sticky top-0">
+            <h1 class="text-2xl font-bold">TubeScoop API</h1>
+            <ul class="mt-4">
+                <li><a href="#overview" class="block py-2 px-4 hover:bg-gray-700">Overview</a></li>
+                <li><a href="#endpoints" class="block py-2 px-4 hover:bg-gray-700">Endpoints</a></li>
+                <li><a href="#authentication" class="block py-2 px-4 hover:bg-gray-700">Authentication</a></li>
+                <li><a href="#errors" class="block py-2 px-4 hover:bg-gray-700">Errors</a></li>
+                <li><a href="#response-structure" class="block py-2 px-4 hover:bg-gray-700">Response Structure</a></li>
+            </ul>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <h1 class="text-4xl font-bold mb-6">TubeScoop API Documentation</h1>
+
+            <!-- Overview Section -->
+            <section id="overview">
+                <h2 class="text-3xl font-semibold mb-4">Overview</h2>
+                <p class="mb-4">🎥 TubeScoop API 📺 is a Node.js application leveraging the Express.js framework to
+                    offer a unique approach to fetching YouTube information without relying on the official YouTube API.
+                    Instead, it ingeniously "scrapes" public web pages to gather data, providing a novel solution for
+                    users and developers interested in YouTube content but looking to avoid the complexities and
+                    limitations of YouTube's official API.</p>
+            </section>
+
+            <!-- Endpoints Section -->
+            <section id="endpoints">
+                <h2 class="text-3xl font-semibold mb-4">Endpoints</h2>
+                <div class="card p-4 mb-4" id="search">
+                    <h3 class="text-2xl font-semibold">
+                        POST /search
+                        <a href="#search" class="text-blue-400 hover:underline anchor-icon"><i class="fas fa-anchor"></i></a>
+                    </h3>
+                    <p class="mb-2">Retrieves search results based on your query.</p>
+                    <code class="block code-block p-2">curl -X POST /search -H "Content-Type: application/json" -d '{"query":"your_search_term"}'</code>
+                    <div class="response-info">
+                        <h4 class="text-lg font-semibold">Response</h4>
+                        <p><a href="#reducedvideo" class="response-tag">ReducedVideo</a></p>
+                        <p>Description: Contains basic information about the search results, including video ID, title, and thumbnail.</p>
+                    </div>
+                </div>
+                <div class="card p-4 mb-4" id="get_video">
+                    <h3 class="text-2xl font-semibold">
+                        POST /get_video
+                        <a href="#get_video" class="text-blue-400 hover:underline anchor-icon"><i class="fas fa-anchor"></i></a>
+                    </h3>
+                    <p class="mb-2">Retrieves information on the specified video URL.</p>
+                    <code class="block code-block p-2">curl -X POST /get_video -H "Content-Type: application/json" -d '{"url":"youtube_video_url"}'</code>
+                    <div class="response-info">
+                        <h4 class="text-lg font-semibold">Response</h4>
+                        <p><a href="#fullvideo" class="response-tag">FullVideo</a></p>
+                        <p>Description: Contains detailed information about the video, including video ID, title, description, and statistics.</p>
+                    </div>
+                </div>
+                <div class="card p-4 mb-4" id="get_playlist">
+                    <h3 class="text-2xl font-semibold">
+                        POST /get_playlist
+                        <a href="#get_playlist" class="text-blue-400 hover:underline anchor-icon"><i class="fas fa-anchor"></i></a>
+                    </h3>
+                    <p class="mb-2">Retrieves information on the specified playlist, including videos.</p>
+                    <code class="block code-block p-2">curl -X POST /get_playlist -H "Content-Type: application/json" -d '{"url":"youtube_playlist_url"}'</code>
+                    <div class="response-info">
+                        <h4 class="text-lg font-semibold">Response</h4>
+                        <p><a href="#playlist" class="response-tag">Playlist</a></p>
+                        <p>Description: Contains details about the playlist and its videos, including video IDs, titles, and descriptions.</p>
+                    </div>
+                </div>
+                <div class="card p-4 mb-4" id="get_channel">
+                    <h3 class="text-2xl font-semibold">
+                        POST /get_channel
+                        <a href="#get_channel" class="text-blue-400 hover:underline anchor-icon"><i class="fas fa-anchor"></i></a>
+                    </h3>
+                    <p class="mb-2">Retrieves information surrounding the specified channel.</p>
+                    <code class="block code-block p-2">curl -X POST /get_channel -H "Content-Type: application/json" -d '{"url":"youtube_channel_url"}'</code>
+                    <div class="response-info">
+                        <h4 class="text-lg font-semibold">Response</h4>
+                        <p><a href="#depthchannel" class="response-tag">DepthChannel</a></p>
+                        <p>Description: Contains detailed information about the channel, including channel ID, name, description, and statistics.</p>
+                    </div>
+                </div>
+                <div class="card p-4 mb-4" id="get_channel_videos">
+                    <h3 class="text-2xl font-semibold">
+                        POST /get_channel_videos
+                        <a href="#get_channel_videos" class="text-blue-400 hover:underline anchor-icon"><i class="fas fa-anchor"></i></a>
+                    </h3>
+                    <p class="mb-2">Retrieves videos that the specified channel has uploaded.</p>
+                    <code class="block code-block p-2">curl -X POST /get_channel_videos -H "Content-Type: application/json" -d '{"channel_id":"youtube_channel_id"}'</code>
+                    <div class="response-info">
+                        <h4 class="text-lg font-semibold">Response</h4>
+                        <p><a href="#reducedvideo" class="response-tag">ReducedVideo</a></p>
+                        <p>Description: Contains basic information about the videos uploaded by the channel, including video IDs, titles, and thumbnails.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Authentication Section -->
+            <section id="authentication" class="mt-5">
+                <h2 class="text-3xl font-semibold mb-4">Authentication</h2>
+                <p class="mb-4">API requests do not require authentication; to add this feature please submit a pull
+                    request to contribute.</p>
+            </section>
+
+            <!-- Errors Section -->
+            <section id="errors" class="mt-5">
+                <h2 class="text-3xl font-semibold mb-4">Errors</h2>
+                <p class="mb-4">The API returns standard HTTP status codes to indicate success or failure. Below are
+                    some common error responses:</p>
+                <ul class="list-disc list-inside mb-4">
+                    <li><strong>400 Bad Request:</strong> The request was invalid or cannot be otherwise served.</li>
+                    <li><strong>401 Unauthorized:</strong> Authentication credentials are missing or invalid.</li>
+                    <li><strong>404 Not Found:</strong> The requested resource could not be found.</li>
+                </ul>
+            </section>
+
+            <!-- Response Structure Section -->
+            <section id="response-structure" class="mt-5">
+                <h2 class="text-3xl font-semibold mb-4">Response Structure</h2>
+                <div class="response-structure p-4 mb-4" id="reducedvideo">
+                    <h3 class="text-2xl font-semibold">
+                        ReducedVideo
+                        <a href="#reducedvideo" class="text-blue-400 hover:underline anchor-icon"><i class="fas fa-anchor"></i></a>
+                    </h3>
+                    <p><strong>Structure:</strong></p>
+                    <ul class="list-disc list-inside mb-4">
+                        <li><strong>title:</strong> The title of the video.</li>
+                        <li><strong>thumbnail:</strong> URL of the video's thumbnail image.</li>
+                        <li><strong>url:</strong> The URL of the video.</li>
+                        <li><strong>channel:</strong> Channel details (ReducedChannel).</li>
+                        <li><strong>views:</strong> Number of views the video has.</li>
+                        <li><strong>length:</strong> Duration of the video.</li>
+                        <li><strong>released_relatively:</strong> The time since the video was released.</li>
+                        <li><strong>id:</strong> Unique identifier for the video.</li>
+                    </ul>
+                </div>
+                <div class="response-structure p-4 mb-4" id="fullvideo">
+                    <h3 class="text-2xl font-semibold">
+                        FullVideo
+                        <a href="#fullvideo" class="text-blue-400 hover:underline anchor-icon"><i class="fas fa-anchor"></i></a>
+                    </h3>
+                    <p><strong>Structure:</strong></p>
+                    <ul class="list-disc list-inside mb-4">
+                        <li><strong>title:</strong> The title of the video.</li>
+                        <li><strong>views:</strong> Number of views the video has.</li>
+                        <li><strong>thumbnail:</strong> URL of the video's thumbnail image.</li>
+                        <li><strong>likecount:</strong> Number of likes the video has.</li>
+                        <li><strong>release_date:</strong> The release date of the video.</li>
+                        <li><strong>released_relatively:</strong> The time since the video was released.</li>
+                        <li><strong>description:</strong> Description of the video.</li>
+                        <li><strong>channel:</strong> Channel details (FullChannel).</li>
+                    </ul>
+                </div>
+                <div class="response-structure p-4 mb-4" id="playlist">
+                    <h3 class="text-2xl font-semibold">
+                        Playlist
+                        <a href="#playlist" class="text-blue-400 hover:underline anchor-icon"><i class="fas fa-anchor"></i></a>
+                    </h3>
+                    <p><strong>Structure:</strong></p>
+                    <ul class="list-disc list-inside mb-4">
+                        <li><strong>title:</strong> The title of the playlist.</li>
+                        <li><strong>thumbnail:</strong> URL of the playlist's thumbnail image.</li>
+                        <li><strong>url:</strong> The URL of the playlist.</li>
+                        <li><strong>creator:</strong> Creator details (ReducedChannel).</li>
+                        <li><strong>description:</strong> Description of the playlist.</li>
+                        <li><strong>video_count:</strong> Number of videos in the playlist.</li>
+                        <li><strong>id:</strong> Unique identifier for the playlist.</li>
+                        <li><strong>videos:</strong> List of videos in the playlist (ReducedVideo[]).</li>
+                    </ul>
+                </div>
+                <div class="response-structure p-4 mb-4" id="depthchannel">
+                    <h3 class="text-2xl font-semibold">
+                        DepthChannel
+                        <a href="#depthchannel" class="text-blue-400 hover:underline anchor-icon"><i class="fas fa-anchor"></i></a>
+                    </h3>
+                    <p><strong>Structure:</strong></p>
+                    <ul class="list-disc list-inside mb-4">
+                        <li><strong>name:</strong> The name of the channel.</li>
+                        <li><strong>description:</strong> Description of the channel.</li>
+                        <li><strong>keywords:</strong> Keywords associated with the channel.</li>
+                        <li><strong>subscribers:</strong> Number of subscribers to the channel.</li>
+                        <li><strong>verified:</strong> Whether the channel is verified.</li>
+                        <li><strong>artist:</strong> Name of the artist if applicable.</li>
+                        <li><strong>url:</strong> The URL of the channel.</li>
+                        <li><strong>profile_picture:</strong> URL of the channel's profile picture.</li>
+                        <li><strong>banner:</strong> URL of the channel's banner image.</li>
+                        <li><strong>tv_banner:</strong> URL of the channel's TV banner image.</li>
+                        <li><strong>sfw:</strong> Whether the channel is marked safe for work.</li>
+                        <li><strong>availableIn:</strong> Availability in different regions.</li>
+                        <li><strong>rss_feed:</strong> URL of the channel's RSS feed.</li>
+                        <li><strong>video_count:</strong> Number of videos on the channel.</li>
+                        <li><strong>id:</strong> Unique identifier for the channel.</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

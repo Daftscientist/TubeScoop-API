@@ -87,7 +87,7 @@ router.post('/', async (req, res, next) => {
         // loop through every item in 
         // this is for video search
         const videos = parseSearch(data, req.body.include_suggestions, req.body.include_ads, req.body.include_shorts);
-        res.json( videos)
+        res.json(videos)
     } catch (err) {
         next(err);
     }
